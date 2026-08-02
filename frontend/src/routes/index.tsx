@@ -10,6 +10,7 @@ const HomePage = lazy(() => import('@/pages/Home'));
 const LoginPage = lazy(() => import('@/pages/Login'));
 const RegisterPage = lazy(() => import('@/pages/Register'));
 const DashboardPage = lazy(() => import('@/pages/Dashboard'));
+const ProfilePage = lazy(() => import('@/pages/Profile'));
 const AssessmentPage = lazy(() => import('@/pages/Assessment'));
 const RoadmapPage = lazy(() => import('@/pages/Roadmap'));
 const ResumePage = lazy(() => import('@/pages/Resume'));
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <DashboardPage />,
+      },
+      {
+        path: '/profile',
+        element: <ProfilePage />,
       },
       {
         path: '/assessment',

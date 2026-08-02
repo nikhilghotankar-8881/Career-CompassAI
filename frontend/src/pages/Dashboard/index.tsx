@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { LayoutDashboard, Brain, Map, FileText, MessageSquare, TrendingUp, Award, BookOpen, LogOut, User as UserIcon } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export default function DashboardPage() {
@@ -22,12 +22,12 @@ export default function DashboardPage() {
   ];
 
   const quickActions = [
+    { title: 'My Profile', description: 'Update skills, goals & education', icon: UserIcon, href: '/profile' },
     { title: 'Take Assessment', description: 'Discover your ideal career path', icon: Brain, href: '/assessment' },
     { title: 'View Roadmap', description: 'Follow your learning journey', icon: Map, href: '/roadmap' },
     { title: 'Analyze Resume', description: 'Get AI feedback on your resume', icon: FileText, href: '/resume' },
     { title: 'Chat with AI', description: 'Ask career-related questions', icon: MessageSquare, href: '/chat' },
     { title: 'Explore Courses', description: 'Find recommended courses', icon: BookOpen, href: '/dashboard' },
-    { title: 'Achievements', description: 'View your badges and progress', icon: Award, href: '/dashboard' },
   ];
 
   return (
@@ -48,13 +48,16 @@ export default function DashboardPage() {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 px-3.5 py-2 bg-[var(--color-surface-light)] border border-[var(--color-border-light)] rounded-[var(--radius-button)]">
+            <Link
+              to="/profile"
+              className="flex items-center gap-2 px-3.5 py-2 bg-[var(--color-surface-light)] border border-[var(--color-border-light)] hover:border-[var(--color-primary-500)] rounded-[var(--radius-button)] transition-colors"
+            >
               <UserIcon className="w-4 h-4 text-[var(--color-primary-600)]" />
               <span className="text-sm font-medium text-[var(--color-text-primary)]">{user?.email}</span>
-            </div>
+            </Link>
             <button
               onClick={handleLogout}
-              className="inline-flex items-center gap-2 px-4 py-2 border border-[var(--color-error-200)] text-[var(--color-error-600)] hover:bg-[var(--color-error-50)] rounded-[var(--radius-button)] transition-colors text-sm font-medium"
+              className="inline-flex items-center gap-2 px-4 py-2 border border-[var(--color-error-200)] text-[var(--color-error-600)] hover:bg-[var(--color-error-50)] rounded-[var(--radius-button)] transition-colors text-sm font-medium cursor-pointer"
             >
               <LogOut className="w-4 h-4" />
               <span>Logout</span>

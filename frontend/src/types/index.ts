@@ -34,12 +34,34 @@ export interface RegisterRequest {
 export interface Profile {
   id: string;
   user_id: string;
-  education: string;
+  full_name: string;
+  email: string;
+  avatar_url?: string;
+  phone?: string;
+  bio?: string;
+  education_level?: string;
+  institution?: string;
+  field_of_study?: string;
+  graduation_year?: number;
   skills: string[];
   interests: string[];
-  career_goals: string;
+  career_goals?: string;
+  target_role?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ProfileUpdate {
+  phone?: string;
   bio?: string;
-  location?: string;
+  education_level?: string;
+  institution?: string;
+  field_of_study?: string;
+  graduation_year?: number;
+  skills?: string[];
+  interests?: string[];
+  career_goals?: string;
+  target_role?: string;
 }
 
 // ---------- Assessment ----------
