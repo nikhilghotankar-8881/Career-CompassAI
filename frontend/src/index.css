@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+/* ========================
+   OneStop AI Design System
+   From: design.md v1.0
+   ======================== */
+
+@theme {
+  /* ---------- Colors: Primary ---------- */
+  --color-primary-50: #EFF6FF;
+  --color-primary-100: #DBEAFE;
+  --color-primary-200: #BFDBFE;
+  --color-primary-300: #93C5FD;
+  --color-primary-400: #60A5FA;
+  --color-primary-500: #3B82F6;
+  --color-primary-600: #2563EB;
+  --color-primary-700: #1D4ED8;
+  --color-primary-800: #1E40AF;
+  --color-primary-900: #1E3A8A;
+
+  /* ---------- Colors: Secondary (Indigo) ---------- */
+  --color-secondary-50: #EEF2FF;
+  --color-secondary-100: #E0E7FF;
+  --color-secondary-200: #C7D2FE;
+  --color-secondary-300: #A5B4FC;
+  --color-secondary-400: #818CF8;
+  --color-secondary-500: #6366F1;
+  --color-secondary-600: #4F46E5;
+  --color-secondary-700: #4338CA;
+  --color-secondary-800: #3730A3;
+  --color-secondary-900: #312E81;
+
+  /* ---------- Colors: Accent (Emerald) ---------- */
+  --color-accent-50: #ECFDF5;
+  --color-accent-100: #D1FAE5;
+  --color-accent-200: #A7F3D0;
+  --color-accent-300: #6EE7B7;
+  --color-accent-400: #34D399;
+  --color-accent-500: #10B981;
+  --color-accent-600: #059669;
+  --color-accent-700: #047857;
+  --color-accent-800: #065F46;
+  --color-accent-900: #064E3B;
+
+  /* ---------- Colors: Warning (Amber) ---------- */
+  --color-warning-50: #FFFBEB;
+  --color-warning-100: #FEF3C7;
+  --color-warning-200: #FDE68A;
+  --color-warning-300: #FCD34D;
+  --color-warning-400: #FBBF24;
+  --color-warning-500: #F59E0B;
+  --color-warning-600: #D97706;
+  --color-warning-700: #B45309;
+
+  /* ---------- Colors: Error (Red) ---------- */
+  --color-error-50: #FEF2F2;
+  --color-error-100: #FEE2E2;
+  --color-error-200: #FECACA;
+  --color-error-300: #FCA5A5;
+  --color-error-400: #F87171;
+  --color-error-500: #EF4444;
+  --color-error-600: #DC2626;
+  --color-error-700: #B91C1C;
+
+  /* ---------- Colors: Surface ---------- */
+  --color-surface-light: #FFFFFF;
+  --color-surface-dark: #1E293B;
+  --color-background-light: #F8FAFC;
+  --color-background-dark: #0F172A;
+  --color-border-light: #E2E8F0;
+  --color-border-dark: #334155;
+
+  /* ---------- Colors: Text ---------- */
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  --color-text-white: #FFFFFF;
+
+  /* ---------- Font Family ---------- */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* ---------- Font Size ---------- */
+  --text-display: 3rem;       /* 48px */
+  --text-hero: 2.5rem;        /* 40px */
+  --text-page-title: 2rem;    /* 32px */
+  --text-section-title: 1.5rem; /* 24px */
+  --text-card-title: 1.25rem; /* 20px */
+  --text-body-lg: 1.125rem;   /* 18px */
+  --text-body: 1rem;           /* 16px */
+  --text-sm: 0.875rem;         /* 14px */
+  --text-caption: 0.75rem;     /* 12px */
+
+  /* ---------- Border Radius ---------- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-button: 12px;
+  --radius-card: 16px;
+  --radius-input: 12px;
+
+  /* ---------- Shadows ---------- */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.15);
+
+  /* ---------- Spacing ---------- */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-base: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --spacing-4xl: 96px;
+
+  /* ---------- Animation ---------- */
+  --duration-fast: 200ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+
+  /* ---------- Layout ---------- */
+  --max-width: 1280px;
+}
+
+/* ========================
+   Base Styles
+   ======================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-background-light);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================
+   Dark Mode
+   ======================== */
+
+.dark body,
+[data-theme="dark"] body {
+  color: var(--color-text-white);
+  background-color: var(--color-background-dark);
+}
+
+/* ========================
+   Scrollbar
+   ======================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+/* ========================
+   Focus Ring (Accessibility)
+   ======================== */
+
+:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
