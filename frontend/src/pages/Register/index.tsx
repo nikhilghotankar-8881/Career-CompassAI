@@ -1,8 +1,58 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Lock, User, Compass } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Mail, Lock, User, Compass, Loader2 } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { toast } from 'sonner';
+import { useAuth } from '@/context/AuthContext';
+
+const registerSchema = z
+  .object({
+    full_name: z.string().min(2, 'Full name must be at least 2 characters'),
+    email: z.string().email('Please enter a valid email address'),
+    password: z.string().min(6, 'Password must be at least 6 characters'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });
+
+type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
+  const { register: registerAuth } = useAuth();
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const onSubmit = async (data: RegisterFormValues) => {
+    setIsSubmitting(true);
+    try {
+      await registerAuth({
+        full_name: data.full_name,
+        email: data.email,
+        password: data.password,
+      });
+      toast.success('Account created successfully!');
+      navigate('/dashboard');
+    } catch (err: any) {
+      const msg = err?.response?.data?.detail || 'Failed to create account. Please try again.';
+      toast.error(msg);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[var(--color-background-light)] flex">
       {/* Left - Branding */}
@@ -35,17 +85,21 @@ export default function RegisterPage() {
           <h1 className="text-2xl font-bold text-[var(--color-text-primary)] mb-2">Create Account</h1>
           <p className="text-[var(--color-text-secondary)] mb-8">Fill in your details to get started</p>
 
-          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label className="block text-sm font-medium text-[var(--color-text-primary)] mb-1.5">Full Name</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--color-text-muted)]" />
                 <input
+                  {...register('full_name')}
                   type="text"
                   placeholder="Nikhil Ghotankar"
                   className="w-full h-12 pl-11 pr-4 border border-[var(--color-border-light)] rounded-[var(--radius-input)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary-500)] focus:ring-2 focus:ring-[var(--color-primary-100)] outline-none transition-all"
                 />
               </div>
+              {errors.full_name && (
+                <p className="mt-1.5 text-xs text-[var(--color-error-500)]">{errors.full_name.message}</p>
+              )}
             </div>
 
             <div>
@@ -53,11 +107,15 @@ export default function RegisterPage() {
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--color-text-muted)]" />
                 <input
+                  {...register('email')}
                   type="email"
                   placeholder="you@example.com"
                   className="w-full h-12 pl-11 pr-4 border border-[var(--color-border-light)] rounded-[var(--radius-input)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary-500)] focus:ring-2 focus:ring-[var(--color-primary-100)] outline-none transition-all"
                 />
               </div>
+              {errors.email && (
+                <p className="mt-1.5 text-xs text-[var(--color-error-500)]">{errors.email.message}</p>
+              )}
             </div>
 
             <div>
@@ -65,11 +123,15 @@ export default function RegisterPage() {
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--color-text-muted)]" />
                 <input
+                  {...register('password')}
                   type="password"
                   placeholder="Create a strong password"
                   className="w-full h-12 pl-11 pr-4 border border-[var(--color-border-light)] rounded-[var(--radius-input)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary-500)] focus:ring-2 focus:ring-[var(--color-primary-100)] outline-none transition-all"
                 />
               </div>
+              {errors.password && (
+                <p className="mt-1.5 text-xs text-[var(--color-error-500)]">{errors.password.message}</p>
+              )}
             </div>
 
             <div>
@@ -77,18 +139,30 @@ export default function RegisterPage() {
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--color-text-muted)]" />
                 <input
+                  {...register('confirmPassword')}
                   type="password"
                   placeholder="Confirm your password"
                   className="w-full h-12 pl-11 pr-4 border border-[var(--color-border-light)] rounded-[var(--radius-input)] text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary-500)] focus:ring-2 focus:ring-[var(--color-primary-100)] outline-none transition-all"
                 />
               </div>
+              {errors.confirmPassword && (
+                <p className="mt-1.5 text-xs text-[var(--color-error-500)]">{errors.confirmPassword.message}</p>
+              )}
             </div>
 
             <button
               type="submit"
-              className="w-full h-12 bg-[var(--color-primary-600)] text-white font-semibold rounded-[var(--radius-button)] hover:bg-[var(--color-primary-700)] transition-colors"
+              disabled={isSubmitting}
+              className="w-full h-12 bg-[var(--color-primary-600)] text-white font-semibold rounded-[var(--radius-button)] hover:bg-[var(--color-primary-700)] transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
             >
-              Create Account
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <span>Creating Account...</span>
+                </>
+              ) : (
+                'Create Account'
+              )}
             </button>
           </form>
 

@@ -1,16 +1,17 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import type { User } from '@/types';
+import api from '@/services/api';
+import type { User, LoginRequest, RegisterRequest } from '@/types';
 
 // ========================
-// Auth Context
-// Will be fully implemented in Phase 3
+// Auth Context Definition
 // ========================
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (token: string, user: User) => void;
+  login: (data: LoginRequest) => Promise<void>;
+  register: (data: RegisterRequest) => Promise<void>;
   logout: () => void;
 }
 
@@ -21,19 +22,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check for existing token on mount
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      // TODO Phase 3: Validate token and fetch user profile
-      setIsLoading(false);
-    } else {
+    // Check token and load current user profile on initial mount
+    async function loadUser() {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        try {
+          const res = await api.get<User>('/api/auth/me');
+          setUser(res.data);
+        } catch {
+          localStorage.removeItem('access_token');
+          setUser(null);
+        }
+      }
       setIsLoading(false);
     }
+    loadUser();
   }, []);
 
-  const login = (token: string, userData: User) => {
-    localStorage.setItem('access_token', token);
-    setUser(userData);
+  const login = async (credentials: LoginRequest) => {
+    const res = await api.post<{ access_token: string; user: User }>('/api/auth/login', credentials);
+    localStorage.setItem('access_token', res.data.access_token);
+    setUser(res.data.user);
+  };
+
+  const register = async (data: RegisterRequest) => {
+    const res = await api.post<{ access_token: string; user: User }>('/api/auth/register', data);
+    localStorage.setItem('access_token', res.data.access_token);
+    setUser(res.data.user);
   };
 
   const logout = () => {
@@ -48,6 +63,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isLoading,
         isAuthenticated: !!user,
         login,
+        register,
         logout,
       }}
     >

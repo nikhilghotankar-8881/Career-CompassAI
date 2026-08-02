@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import ProtectedRoute from '@/components/common/ProtectedRoute';
 
 // ========================
 // Lazy-loaded pages (code splitting)
@@ -33,25 +34,30 @@ export const router = createBrowserRouter([
     element: <RegisterPage />,
   },
 
-  // Protected routes (auth guard will be added in Phase 3)
+  // Protected routes (Requires Authentication)
   {
-    path: '/dashboard',
-    element: <DashboardPage />,
-  },
-  {
-    path: '/assessment',
-    element: <AssessmentPage />,
-  },
-  {
-    path: '/roadmap',
-    element: <RoadmapPage />,
-  },
-  {
-    path: '/resume',
-    element: <ResumePage />,
-  },
-  {
-    path: '/chat',
-    element: <ChatPage />,
+    element: <ProtectedRoute />,
+    children: [
+      {
+        path: '/dashboard',
+        element: <DashboardPage />,
+      },
+      {
+        path: '/assessment',
+        element: <AssessmentPage />,
+      },
+      {
+        path: '/roadmap',
+        element: <RoadmapPage />,
+      },
+      {
+        path: '/resume',
+        element: <ResumePage />,
+      },
+      {
+        path: '/chat',
+        element: <ChatPage />,
+      },
+    ],
   },
 ]);

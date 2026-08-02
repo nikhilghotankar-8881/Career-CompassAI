@@ -1,7 +1,19 @@
 import { motion } from 'framer-motion';
-import { LayoutDashboard, Brain, Map, FileText, MessageSquare, TrendingUp, Award, BookOpen } from 'lucide-react';
+import { LayoutDashboard, Brain, Map, FileText, MessageSquare, TrendingUp, Award, BookOpen, LogOut, User as UserIcon } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export default function DashboardPage() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    toast.success('Logged out successfully');
+    navigate('/login');
+  };
+
   const stats = [
     { label: 'Assessment Score', value: '—', icon: Brain, color: 'var(--color-secondary-500)' },
     { label: 'Roadmap Progress', value: '—', icon: Map, color: 'var(--color-primary-600)' },
@@ -20,19 +32,34 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[var(--color-background-light)]">
-      {/* Sidebar placeholder — will be extracted into layout component */}
       <div className="max-w-[var(--max-width)] mx-auto px-8 py-8">
-        {/* Header */}
+        {/* Header with User Profile and Logout */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="flex items-center justify-between mb-8 pb-6 border-b border-[var(--color-border-light)]"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <LayoutDashboard className="w-7 h-7 text-[var(--color-primary-600)]" />
-            <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">Dashboard</h1>
+          <div className="flex items-center gap-3">
+            <LayoutDashboard className="w-8 h-8 text-[var(--color-primary-600)]" />
+            <div>
+              <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">Dashboard</h1>
+              <p className="text-[var(--color-text-secondary)]">Welcome back, <span className="font-semibold text-[var(--color-primary-600)]">{user?.full_name || 'Student'}</span>!</p>
+            </div>
           </div>
-          <p className="text-[var(--color-text-secondary)]">Welcome back! Here's your career overview.</p>
+
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 px-3.5 py-2 bg-[var(--color-surface-light)] border border-[var(--color-border-light)] rounded-[var(--radius-button)]">
+              <UserIcon className="w-4 h-4 text-[var(--color-primary-600)]" />
+              <span className="text-sm font-medium text-[var(--color-text-primary)]">{user?.email}</span>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center gap-2 px-4 py-2 border border-[var(--color-error-200)] text-[var(--color-error-600)] hover:bg-[var(--color-error-50)] rounded-[var(--radius-button)] transition-colors text-sm font-medium"
+            >
+              <LogOut className="w-4 h-4" />
+              <span>Logout</span>
+            </button>
+          </div>
         </motion.div>
 
         {/* Stats Cards */}
