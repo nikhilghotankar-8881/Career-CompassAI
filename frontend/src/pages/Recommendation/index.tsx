@@ -170,7 +170,7 @@ export default function RecommendationPage() {
                   Now that you know your recommended roles and skill gaps, it's time to build a personalized learning roadmap to achieve your goals.
                 </p>
                 <button 
-                  onClick={() => navigate('/roadmap')}
+                  onClick={() => navigate(`/roadmap?recommendationId=${recommendations[0]?.id}`)}
                   className="w-full bg-white text-[var(--color-primary-800)] font-bold py-3 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
                 >
                   Generate Roadmap <ArrowRight className="w-4 h-4" />

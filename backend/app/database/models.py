@@ -39,6 +39,7 @@ class User(Base):
     assessments = relationship("Assessment", back_populates="user", cascade="all, delete-orphan")
     assessment_results = relationship("AssessmentResult", back_populates="user", cascade="all, delete-orphan")
     recommendations = relationship("CareerRecommendation", back_populates="user", cascade="all, delete-orphan")
+    roadmaps = relationship("Roadmap", back_populates="user", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -174,5 +175,45 @@ class CareerRecommendation(Base):
 
     def __repr__(self):
         return f"<CareerRecommendation id={self.id} title={self.career_title} match={self.match_percentage}%>"
+
+
+class Roadmap(Base):
+    """Personalized learning roadmap for a user based on a career recommendation."""
+
+    __tablename__ = "roadmaps"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String, ForeignKey("users.id"), nullable=False)
+    recommendation_id = Column(String, ForeignKey("career_recommendations.id"), nullable=True)
+    target_role = Column(String, nullable=False)
+    progress_percentage = Column(Integer, default=0)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    user = relationship("User", back_populates="roadmaps")
+    recommendation = relationship("CareerRecommendation")
+    milestones = relationship("Milestone", back_populates="roadmap", cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return f"<Roadmap id={self.id} target={self.target_role}>"
+
+
+class Milestone(Base):
+    """Individual learning steps or skills within a roadmap."""
+
+    __tablename__ = "milestones"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    roadmap_id = Column(String, ForeignKey("roadmaps.id"), nullable=False)
+    title = Column(String, nullable=False)
+    description = Column(Text, nullable=False)
+    status = Column(String, default="pending")  # pending, in_progress, completed
+    order_index = Column(Integer, default=0)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    roadmap = relationship("Roadmap", back_populates="milestones")
+
+    def __repr__(self):
+        return f"<Milestone id={self.id} status={self.status}>"
 
 

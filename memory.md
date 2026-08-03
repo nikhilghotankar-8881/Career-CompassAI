@@ -13,9 +13,9 @@
 ---
 
 ## 🚦 Current Status Summary
-- **Current Phase**: Phase 6 (AI Recommendation Engine) — **COMPLETED ✅**
-- **Next Phase**: Phase 7 (Learning Roadmap) — **READY TO START 🚀**
-- **Current Sprint**: Sprint 2 (Career Assessment & Recommendation Engine)
+- **Current Phase**: Phase 7 (Learning Roadmap) — **COMPLETED ✅**
+- **Next Phase**: Phase 8 (Unified Student Dashboard) — **READY TO START 🚀**
+- **Current Sprint**: Sprint 3 (Learning Roadmap & Dashboard)
 - **Active Files / Modified in Current Phase**:
   - `backend/app/database/models.py`
   - `backend/app/schemas/assessment.py`
@@ -41,7 +41,7 @@
 | **Phase 4** | User Profile Module (Bio, Education, Skills, Interests, Career Goals, Avatar) | **Completed ✅** |
 | **Phase 5** | Career Assessment Module (Question engine, 5-domain score calculation, Archetypes, Quiz UI) | **Completed ✅** |
 | **Phase 6** | AI Recommendation Engine (Gemini/OpenAI integration for career matching & skill gaps) | **Completed ✅** |
-| **Phase 7** | Learning Roadmap (Interactive skill tree, milestones, progress tracking) | **Not Started ⏳** |
+| **Phase 7** | Learning Roadmap (Interactive skill tree, milestones, progress tracking) | **Completed ✅** |
 | **Phase 8** | Unified Student Dashboard | **Not Started ⏳** |
 | **Phase 9** | AI Resume Analyzer (Resume parsing, scoring, feedback) | **Not Started ⏳** |
 | **Phase 10** | AI Career Chatbot | **Not Started ⏳** |
