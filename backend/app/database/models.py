@@ -36,6 +36,9 @@ class User(Base):
 
     profile = relationship("Profile", back_populates="user", uselist=False, cascade="all, delete-orphan")
 
+    assessments = relationship("Assessment", back_populates="user", cascade="all, delete-orphan")
+    assessment_results = relationship("AssessmentResult", back_populates="user", cascade="all, delete-orphan")
+
     def __repr__(self):
         return f"<User {self.email}>"
 
@@ -77,13 +80,72 @@ class Profile(Base):
         return f"<Profile user_id={self.user_id}>"
 
 
-# Future models (will be added in later phases):
-# - Profile (Phase 4)
-# - Assessment (Phase 5)
-# - Question (Phase 5)
-# - Answer (Phase 5)
-# - Recommendation (Phase 6)
-# - Roadmap (Phase 7)
-# - Milestone (Phase 7)
-# - Resume (Phase 9)
-# - ChatHistory (Phase 10)
+class Question(Base):
+    """Standardized assessment question model."""
+
+    __tablename__ = "questions"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    category = Column(String, nullable=False, index=True)  # personality, skill, interest
+    sub_domain = Column(String, nullable=True)  # Analytical, Technical, Creative, Leadership, Collaborative
+    question_text = Column(Text, nullable=False)
+    options = Column(JSON, nullable=False)  # list of dicts: [{"label": "...", "score_vector": {...}}]
+    order_index = Column(Integer, default=0)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    def __repr__(self):
+        return f"<Question id={self.id} category={self.category}>"
+
+
+class Assessment(Base):
+    """User career assessment session model."""
+
+    __tablename__ = "assessments"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String, ForeignKey("users.id"), nullable=False)
+    status = Column(String, default="in_progress")  # in_progress, completed
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    completed_at = Column(DateTime, nullable=True)
+
+    user = relationship("User", back_populates="assessments")
+    answers = relationship("AssessmentAnswer", back_populates="assessment", cascade="all, delete-orphan")
+    results = relationship("AssessmentResult", back_populates="assessment", cascade="all, delete-orphan")
+
+    def __repr__(self):
+        return f"<Assessment id={self.id} status={self.status}>"
+
+
+class AssessmentAnswer(Base):
+    """User response to a specific assessment question."""
+
+    __tablename__ = "assessment_answers"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    assessment_id = Column(String, ForeignKey("assessments.id"), nullable=False)
+    question_id = Column(String, ForeignKey("questions.id"), nullable=False)
+    selected_option_index = Column(Integer, nullable=False)
+    score_vector = Column(JSON, default=dict)  # domain scores snapshot
+
+    assessment = relationship("Assessment", back_populates="answers")
+    question = relationship("Question")
+
+
+class AssessmentResult(Base):
+    """Generated analysis and score breakdown for a completed assessment."""
+
+    __tablename__ = "assessment_results"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    assessment_id = Column(String, ForeignKey("assessments.id"), nullable=False)
+    user_id = Column(String, ForeignKey("users.id"), nullable=False)
+    category_scores = Column(JSON, nullable=False)  # {"Analytical": 85, "Technical": 90, ...}
+    top_traits = Column(JSON, default=list)  # ["Problem Solver", "Data Driven", ...]
+    personality_type = Column(String, nullable=True)  # e.g., "Analytical Thinker", "Creative Strategist"
+    recommended_domains = Column(JSON, default=list)  # ["Software Engineering", "Data Science"]
+    summary = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    user = relationship("User", back_populates="assessment_results")
+    assessment = relationship("Assessment", back_populates="results")
+
