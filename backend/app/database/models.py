@@ -38,6 +38,7 @@ class User(Base):
 
     assessments = relationship("Assessment", back_populates="user", cascade="all, delete-orphan")
     assessment_results = relationship("AssessmentResult", back_populates="user", cascade="all, delete-orphan")
+    recommendations = relationship("CareerRecommendation", back_populates="user", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -148,4 +149,30 @@ class AssessmentResult(Base):
 
     user = relationship("User", back_populates="assessment_results")
     assessment = relationship("Assessment", back_populates="results")
+
+
+class CareerRecommendation(Base):
+    """Generated AI career recommendation entry for a user."""
+
+    __tablename__ = "career_recommendations"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String, ForeignKey("users.id"), nullable=False)
+    assessment_result_id = Column(String, ForeignKey("assessment_results.id"), nullable=True)
+    career_title = Column(String, nullable=False)
+    match_percentage = Column(Integer, nullable=False)
+    description = Column(Text, nullable=False)
+    required_skills = Column(JSON, default=list)
+    skill_gaps = Column(JSON, default=list)
+    learning_path = Column(JSON, default=list)
+    salary_range = Column(String, nullable=True)
+    job_outlook = Column(String, nullable=True)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    user = relationship("User", back_populates="recommendations")
+    assessment_result = relationship("AssessmentResult")
+
+    def __repr__(self):
+        return f"<CareerRecommendation id={self.id} title={self.career_title} match={self.match_percentage}%>"
+
 

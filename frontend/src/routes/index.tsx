@@ -15,6 +15,7 @@ const AssessmentPage = lazy(() => import('@/pages/Assessment'));
 const RoadmapPage = lazy(() => import('@/pages/Roadmap'));
 const ResumePage = lazy(() => import('@/pages/Resume'));
 const ChatPage = lazy(() => import('@/pages/Chat'));
+const RecommendationPage = lazy(() => import('@/pages/Recommendation'));
 
 // ========================
 // Router Configuration
@@ -58,6 +59,10 @@ export const router = createBrowserRouter([
       {
         path: '/resume',
         element: <ResumePage />,
+      },
+      {
+        path: '/recommendations',
+        element: <RecommendationPage />,
       },
       {
         path: '/chat',
