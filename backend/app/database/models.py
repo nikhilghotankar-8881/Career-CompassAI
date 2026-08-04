@@ -41,6 +41,7 @@ class User(Base):
     recommendations = relationship("CareerRecommendation", back_populates="user", cascade="all, delete-orphan")
     roadmaps = relationship("Roadmap", back_populates="user", cascade="all, delete-orphan")
     resume_analyses = relationship("ResumeAnalysis", back_populates="user", cascade="all, delete-orphan")
+    chat_messages = relationship("ChatMessage", back_populates="user", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -235,5 +236,22 @@ class ResumeAnalysis(Base):
 
     def __repr__(self):
         return f"<ResumeAnalysis id={self.id} score={self.score}>"
+
+
+class ChatMessage(Base):
+    """Conversation history for the AI Career Chatbot."""
+
+    __tablename__ = "chat_messages"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String, ForeignKey("users.id"), nullable=False)
+    role = Column(String, nullable=False) # 'user' or 'assistant'
+    content = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    user = relationship("User", back_populates="chat_messages")
+
+    def __repr__(self):
+        return f"<ChatMessage role={self.role} length={len(self.content)}>"
 
 
