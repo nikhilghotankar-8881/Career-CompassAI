@@ -16,6 +16,7 @@ from app.api.recommendations import router as recommendations_router
 from app.api.roadmap import router as roadmap_router
 from app.api.resume import router as resume_router
 from app.api.chat import router as chatbot_router
+from app.api.dashboard import router as dashboard_router
 
 settings = get_settings()
 
@@ -60,7 +61,7 @@ app.include_router(recommendations_router)
 app.include_router(roadmap_router)
 app.include_router(resume_router)
 app.include_router(chatbot_router)
-
+app.include_router(dashboard_router)
 
 # ========================
 # Root / Health Check
