@@ -1,5 +1,5 @@
 import api from './api';
-import { ChatMessage, ChatMessageRequest } from '../types/chat';
+import type { ChatMessage, ChatMessageRequest } from '../types/chat';
 
 export const chatService = {
   getHistory: async (): Promise<ChatMessage[]> => {

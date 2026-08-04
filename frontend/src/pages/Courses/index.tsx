@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, GraduationCap, Clock, ExternalLink, Loader2, RefreshCcw } from 'lucide-react';
 import { toast } from 'sonner';
 import { courseService } from '@/services/courseService';
-import { CourseRecommendation } from '@/types/course';
+import type { CourseRecommendation } from '@/types/course';
 import Navbar from '@/components/layout/Navbar';
 
 export default function CoursesPage() {

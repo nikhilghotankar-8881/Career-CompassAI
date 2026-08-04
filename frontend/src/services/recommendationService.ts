@@ -1,5 +1,5 @@
 import api from './api';
-import { CareerRecommendation, RecommendationListResponse } from '../types/recommendation';
+import type { CareerRecommendation, RecommendationListResponse } from '../types/recommendation';
 
 export const recommendationService = {
   generateRecommendations: async (): Promise<RecommendationListResponse> => {

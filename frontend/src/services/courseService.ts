@@ -1,5 +1,5 @@
 import api from './api';
-import { CourseRecommendation } from '../types/course';
+import type { CourseRecommendation } from '../types/course';
 
 export const courseService = {
   getCourses: async (): Promise<CourseRecommendation[]> => {

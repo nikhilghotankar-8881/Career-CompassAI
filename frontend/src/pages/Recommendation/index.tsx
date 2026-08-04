@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { Sparkles, Briefcase, TrendingUp, CheckCircle, XCircle, ArrowRight, Loader2 } from 'lucide-react';
 import { recommendationService } from '@/services/recommendationService';
-import { CareerRecommendation } from '@/types/recommendation';
+import type { CareerRecommendation } from '@/types/recommendation';
 import Navbar from '@/components/layout/Navbar';
 
 export default function RecommendationPage() {

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { Loader2, CheckCircle2, Circle, PlayCircle, Map, Target, AlertCircle } from 'lucide-react';
 import { roadmapService } from '@/services/roadmapService';
-import { Roadmap, Milestone } from '@/types/roadmap';
+import type { Roadmap, Milestone } from '@/types/roadmap';
 import Navbar from '@/components/layout/Navbar';
 
 export default function RoadmapPage() {

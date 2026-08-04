@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { MessageSquare, Bot, User, Send, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { chatService } from '@/services/chatService';
-import { ChatMessage } from '@/types/chat';
+import type { ChatMessage } from '@/types/chat';
 import Navbar from '@/components/layout/Navbar';
 
 export default function ChatPage() {

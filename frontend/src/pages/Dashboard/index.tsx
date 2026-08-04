@@ -5,7 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { dashboardService } from '@/services/dashboardService';
-import { DashboardSummary } from '@/types/dashboard';
+import type { DashboardSummary } from '@/types/dashboard';
 
 export default function DashboardPage() {
   const { user, logout } = useAuth();

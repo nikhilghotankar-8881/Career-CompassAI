@@ -1,5 +1,5 @@
 import api from './api';
-import { ResumeAnalysis } from '../types/resume';
+import type { ResumeAnalysis } from '../types/resume';
 
 export const resumeService = {
   uploadResume: async (file: File): Promise<ResumeAnalysis> => {

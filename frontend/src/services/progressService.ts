@@ -1,5 +1,5 @@
 import api from './api';
-import { ProgressOverview } from '../types/progress';
+import type { ProgressOverview } from '../types/progress';
 
 export const progressService = {
   getOverview: async (): Promise<ProgressOverview> => {

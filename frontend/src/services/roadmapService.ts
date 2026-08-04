@@ -1,5 +1,5 @@
 import api from './api';
-import { Roadmap, MilestoneUpdate } from '../types/roadmap';
+import type { Roadmap, MilestoneUpdate } from '../types/roadmap';
 
 export const roadmapService = {
   getActiveRoadmap: async (): Promise<Roadmap> => {

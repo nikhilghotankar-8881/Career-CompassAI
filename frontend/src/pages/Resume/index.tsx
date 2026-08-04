@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FileText, Upload, CheckCircle2, AlertCircle, Lightbulb, Loader2, RefreshCcw } from 'lucide-react';
 import { toast } from 'sonner';
 import { resumeService } from '@/services/resumeService';
-import { ResumeAnalysis } from '@/types/resume';
+import type { ResumeAnalysis } from '@/types/resume';
 import Navbar from '@/components/layout/Navbar';
 
 export default function ResumePage() {
