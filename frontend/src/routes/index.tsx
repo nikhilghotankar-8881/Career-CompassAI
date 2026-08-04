@@ -16,6 +16,7 @@ const RoadmapPage = lazy(() => import('@/pages/Roadmap'));
 const ResumePage = lazy(() => import('@/pages/Resume'));
 const ChatPage = lazy(() => import('@/pages/Chat'));
 const RecommendationPage = lazy(() => import('@/pages/Recommendation'));
+const ProgressPage = lazy(() => import('@/pages/Progress'));
 
 // ========================
 // Router Configuration
@@ -67,6 +68,10 @@ export const router = createBrowserRouter([
       {
         path: '/chat',
         element: <ChatPage />,
+      },
+      {
+        path: '/progress',
+        element: <ProgressPage />,
       },
     ],
   },

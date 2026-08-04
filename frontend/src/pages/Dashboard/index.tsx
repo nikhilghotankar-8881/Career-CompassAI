@@ -72,7 +72,8 @@ export default function DashboardPage() {
     { title: 'View Roadmap', description: 'Follow your learning journey', icon: Map, href: '/roadmap' },
     { title: 'Analyze Resume', description: 'Get AI feedback on your resume', icon: FileText, href: '/resume' },
     { title: 'Chat with AI', description: 'Ask career-related questions', icon: MessageSquare, href: '/chat' },
-    { title: 'Explore Courses', description: 'Find recommended courses', icon: BookOpen, href: '/dashboard' },
+    { title: 'Explore Courses', description: 'Find recommended courses', icon: BookOpen, href: '/courses' },
+    { title: 'Track Progress', description: 'View your analytics & achievements', icon: TrendingUp, href: '/progress' },
   ];
 
   return (

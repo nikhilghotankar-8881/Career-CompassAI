@@ -43,6 +43,7 @@ class User(Base):
     resume_analyses = relationship("ResumeAnalysis", back_populates="user", cascade="all, delete-orphan")
     chat_messages = relationship("ChatMessage", back_populates="user", cascade="all, delete-orphan")
     course_recommendations = relationship("CourseRecommendation", back_populates="user", cascade="all, delete-orphan")
+    achievements = relationship("Achievement", back_populates="user", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -276,4 +277,22 @@ class CourseRecommendation(Base):
     def __repr__(self):
         return f"<CourseRecommendation title={self.title} platform={self.platform}>"
 
+
+class Achievement(Base):
+    """Gamified achievement badge earned by a user based on progress milestones."""
+
+    __tablename__ = "achievements"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String, ForeignKey("users.id"), nullable=False)
+    badge_key = Column(String, nullable=False)  # Unique key per badge type
+    badge_name = Column(String, nullable=False)
+    badge_description = Column(Text, nullable=False)
+    badge_icon = Column(String, nullable=False)  # Lucide icon name
+    earned_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    user = relationship("User", back_populates="achievements")
+
+    def __repr__(self):
+        return f"<Achievement badge={self.badge_key} user_id={self.user_id}>"
 

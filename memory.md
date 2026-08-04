@@ -6,26 +6,29 @@
 
 ## 📌 Project Overview
 - **Project Name**: Career-CompassAI (OneStop AI)
-- **Version**: 1.5.0
-- **Last Updated Date**: 2026-08-03
+- **Version**: 1.6.0
+- **Last Updated Date**: 2026-08-04
 - **Primary Goal**: AI-powered career discovery, personalized learning roadmaps, resume analysis, and educational guidance platform.
 
 ---
 
 ## 🚦 Current Status Summary
-- **Current Phase**: Phase 11 (Course & Certification Recommendations) — **COMPLETED ✅**
-- **Next Phase**: Phase 12 (Progress Tracking & Analytics) — **READY TO START 🚀**
-- **Current Sprint**: Sprint 5 (Course Recommendation & Progress Tracking)
+- **Current Phase**: Phase 12 (Progress Tracking & Analytics) — **COMPLETED ✅**
+- **Next Phase**: Phase 13 (Admin Portal) — **READY TO START 🚀**
+- **Current Sprint**: Sprint 5 (Course Recommendation & Progress Tracking) — **COMPLETE**
 - **Active Files / Modified in Current Phase**:
-  - `backend/app/database/models.py`
-  - `backend/app/schemas/assessment.py`
-  - `backend/app/services/assessment_service.py`
-  - `backend/app/api/assessments.py`
-  - `frontend/src/pages/Assessment/index.tsx`
-  - `frontend/src/services/assessmentService.ts`
-  - `frontend/src/types/assessment.ts`
-  - `frontend/src/types/index.ts`
-  - `phases.md`
+  - `backend/app/database/models.py` — Added `Achievement` model + User relationship
+  - `backend/app/schemas/progress.py` — **NEW** Progress schemas
+  - `backend/app/services/progress_service.py` — **NEW** Progress aggregation + badge logic
+  - `backend/app/api/progress.py` — **NEW** Progress API route
+  - `backend/app/main.py` — Registered progress router, fixed courses_router import
+  - `frontend/src/types/progress.ts` — **NEW** TypeScript interfaces
+  - `frontend/src/services/progressService.ts` — **NEW** API service
+  - `frontend/src/pages/Progress/index.tsx` — **NEW** Progress page with Recharts
+  - `frontend/src/routes/index.tsx` — Added /progress route
+  - `frontend/src/components/layout/Navbar.tsx` — Added Progress nav link
+  - `frontend/src/pages/Dashboard/index.tsx` — Added Track Progress quick action
+  - `README.md`
   - `memory.md`
 
 ---
@@ -46,7 +49,7 @@
 | **Phase 9** | AI Resume Analyzer (Resume parsing, scoring, feedback) | **Completed ✅** |
 | **Phase 10** | AI Career Chatbot | **Completed ✅** |
 | **Phase 11** | Course & Certification Recommendations | **Completed ✅** |
-| **Phase 12** | Progress Tracking & Analytics | **Not Started ⏳** |
+| **Phase 12** | Progress Tracking & Analytics | **Completed ✅** |
 | **Phase 13** | Admin Portal | **Not Started ⏳** |
 | **Phase 14** | Notification Engine | **Not Started ⏳** |
 | **Phase 15** | Comprehensive Testing (Unit, Integration, API, E2E) | **Not Started ⏳** |
@@ -79,6 +82,24 @@
 - Endpoints implemented: `/api/assessments/questions`, `/api/assessments/start`, `/api/assessments/submit`, `/api/assessments/results`.
 - Multi-step Framer Motion quiz wizard UI built with progress stepper and results breakdown dashboard.
 
+### Phase 12: Progress Tracking & Analytics
+- **New `Achievement` DB model** for gamified badge tracking, linked to `User` via one-to-many relationship.
+- **Progress Service** (`progress_service.py`) aggregates data across all modules:
+  - Skill Progress — radar chart data from latest assessment domain scores
+  - Roadmap History — all roadmaps with per-roadmap milestone stats
+  - Assessment History — timeline of all assessments with score evolution
+  - Learning Stats — counts across assessments, milestones, courses, resume reviews, chat messages
+  - Achievement Badges — 9 badge definitions with auto-award logic on each progress fetch
+- **API endpoint**: `GET /api/progress/overview` returns `ProgressOverviewResponse` and triggers auto-badge awarding.
+- **Frontend Progress Page** (`/progress`) features:
+  - Stats grid (4 animated cards)
+  - Recharts Radar Chart for skill domains
+  - Recharts Line Chart for assessment score evolution
+  - Roadmap history cards with animated progress bars
+  - Achievement badge grid (earned with gold gradient, locked with grey opacity)
+  - All sections use Framer Motion staggered animations
+- Progress link added to Navbar and Dashboard quick actions.
+
 ---
 
 ## 🏗️ Important Technical Decisions & Architecture Patterns
@@ -93,6 +114,8 @@
    - Strict API type contracts using Pydantic `BaseModel` schemas for requests and responses.
 4. **Vite API Proxying**:
    - Frontend proxies `/api` calls directly to `http://localhost:8000` during development.
+5. **Auto-Badge Awarding**:
+   - Achievements are evaluated and awarded lazily on each progress overview fetch, ensuring badges appear immediately when thresholds are crossed.
 
 ---
 
@@ -102,8 +125,7 @@
 
 ---
 
-## 🎯 Next Step / Pending Tasks (Phase 6 Roadmap)
-- Implement `backend/app/services/recommendation_service.py` to call Gemini API / OpenAI API.
-- Create DB model `CareerRecommendation` to persist personalized recommendations based on Phase 5 Assessment results.
-- Create API endpoints `/api/recommendations/generate` and `/api/recommendations/latest`.
-- Build UI components for Career Recommendation Cards and Skill Gap breakdowns on frontend.
+## 🎯 Next Step / Pending Tasks (Phase 13 — Admin Portal)
+- Create admin-only API endpoints for platform management.
+- Build admin dashboard with user management, assessment management, course management, and reports.
+- Implement role-based access control for admin routes.

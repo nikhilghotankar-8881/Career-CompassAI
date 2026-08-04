@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FileText, MessageSquare, BookOpen, Map, ArrowLeft } from 'lucide-react';
+import { LayoutDashboard, FileText, MessageSquare, BookOpen, Map, ArrowLeft, TrendingUp } from 'lucide-react';
 
 export default function Navbar() {
   const location = useLocation();
@@ -61,6 +61,17 @@ export default function Navbar() {
               >
                 <BookOpen className="w-4 h-4 mr-2" />
                 Courses
+              </Link>
+              <Link
+                to="/progress"
+                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                  isActive('/progress')
+                    ? 'border-[var(--color-primary-500)] text-gray-900'
+                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                }`}
+              >
+                <TrendingUp className="w-4 h-4 mr-2" />
+                Progress
               </Link>
               <Link
                 to="/chat"

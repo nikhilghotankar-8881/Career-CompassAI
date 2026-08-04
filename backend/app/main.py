@@ -17,6 +17,8 @@ from app.api.roadmap import router as roadmap_router
 from app.api.resume import router as resume_router
 from app.api.chat import router as chatbot_router
 from app.api.dashboard import router as dashboard_router
+from app.api.courses import router as courses_router
+from app.api.progress import router as progress_router
 
 settings = get_settings()
 
@@ -63,6 +65,7 @@ app.include_router(resume_router)
 app.include_router(chatbot_router)
 app.include_router(dashboard_router)
 app.include_router(courses_router)
+app.include_router(progress_router)
 
 # ========================
 # Root / Health Check
