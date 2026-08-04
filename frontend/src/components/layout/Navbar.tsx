@@ -1,8 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FileText, MessageSquare, BookOpen, Map, ArrowLeft, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, FileText, MessageSquare, BookOpen, Map, ArrowLeft, TrendingUp, Shield } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Navbar() {
   const location = useLocation();
+  const { user } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -84,6 +86,19 @@ export default function Navbar() {
                 <MessageSquare className="w-4 h-4 mr-2" />
                 AI Advisor
               </Link>
+              {user?.is_admin && (
+                <Link
+                  to="/admin"
+                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                    isActive('/admin')
+                      ? 'border-red-500 text-gray-900'
+                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                  }`}
+                >
+                  <Shield className="w-4 h-4 mr-2" />
+                  Admin
+                </Link>
+              )}
             </div>
           </div>
           

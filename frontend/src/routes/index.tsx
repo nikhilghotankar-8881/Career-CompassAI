@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import ProtectedRoute from '@/components/common/ProtectedRoute';
+import AdminRoute from '@/components/common/AdminRoute';
 
 // ========================
 // Lazy-loaded pages (code splitting)
@@ -17,6 +18,7 @@ const ResumePage = lazy(() => import('@/pages/Resume'));
 const ChatPage = lazy(() => import('@/pages/Chat'));
 const RecommendationPage = lazy(() => import('@/pages/Recommendation'));
 const ProgressPage = lazy(() => import('@/pages/Progress'));
+const AdminPage = lazy(() => import('@/pages/Admin'));
 
 // ========================
 // Router Configuration
@@ -72,6 +74,17 @@ export const router = createBrowserRouter([
       {
         path: '/progress',
         element: <ProgressPage />,
+      },
+    ],
+  },
+
+  // Admin routes (Requires Admin Role)
+  {
+    element: <AdminRoute />,
+    children: [
+      {
+        path: '/admin',
+        element: <AdminPage />,
       },
     ],
   },

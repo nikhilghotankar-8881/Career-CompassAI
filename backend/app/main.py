@@ -19,6 +19,7 @@ from app.api.chat import router as chatbot_router
 from app.api.dashboard import router as dashboard_router
 from app.api.courses import router as courses_router
 from app.api.progress import router as progress_router
+from app.api.admin import router as admin_router
 
 settings = get_settings()
 
@@ -66,6 +67,7 @@ app.include_router(chatbot_router)
 app.include_router(dashboard_router)
 app.include_router(courses_router)
 app.include_router(progress_router)
+app.include_router(admin_router)
 
 # ========================
 # Root / Health Check

@@ -6,28 +6,29 @@
 
 ## 📌 Project Overview
 - **Project Name**: Career-CompassAI (OneStop AI)
-- **Version**: 1.6.0
+- **Version**: 1.7.0
 - **Last Updated Date**: 2026-08-04
 - **Primary Goal**: AI-powered career discovery, personalized learning roadmaps, resume analysis, and educational guidance platform.
 
 ---
 
 ## 🚦 Current Status Summary
-- **Current Phase**: Phase 12 (Progress Tracking & Analytics) — **COMPLETED ✅**
-- **Next Phase**: Phase 13 (Admin Portal) — **READY TO START 🚀**
-- **Current Sprint**: Sprint 5 (Course Recommendation & Progress Tracking) — **COMPLETE**
+- **Current Phase**: Phase 13 (Admin Panel) — **COMPLETED ✅**
+- **Next Phase**: Phase 14 (Notification Engine) — **READY TO START 🚀**
+- **Current Sprint**: Sprint 6 (Admin Panel, Notifications, Testing, Deployment)
 - **Active Files / Modified in Current Phase**:
-  - `backend/app/database/models.py` — Added `Achievement` model + User relationship
-  - `backend/app/schemas/progress.py` — **NEW** Progress schemas
-  - `backend/app/services/progress_service.py` — **NEW** Progress aggregation + badge logic
-  - `backend/app/api/progress.py` — **NEW** Progress API route
-  - `backend/app/main.py` — Registered progress router, fixed courses_router import
-  - `frontend/src/types/progress.ts` — **NEW** TypeScript interfaces
-  - `frontend/src/services/progressService.ts` — **NEW** API service
-  - `frontend/src/pages/Progress/index.tsx` — **NEW** Progress page with Recharts
-  - `frontend/src/routes/index.tsx` — Added /progress route
-  - `frontend/src/components/layout/Navbar.tsx` — Added Progress nav link
-  - `frontend/src/pages/Dashboard/index.tsx` — Added Track Progress quick action
+  - `backend/app/core/dependencies.py` — Added `get_current_admin` guard
+  - `backend/app/schemas/admin.py` — **NEW** Admin schemas
+  - `backend/app/services/admin_service.py` — **NEW** Admin business logic
+  - `backend/app/api/admin.py` — **NEW** 8 admin API endpoints
+  - `backend/app/main.py` — Registered admin router
+  - `frontend/src/types/index.ts` — Added `is_admin` to User interface
+  - `frontend/src/types/admin.ts` — **NEW** Admin TypeScript types
+  - `frontend/src/services/adminService.ts` — **NEW** Admin API service
+  - `frontend/src/components/common/AdminRoute.tsx` — **NEW** Admin route guard
+  - `frontend/src/pages/Admin/index.tsx` — **NEW** Multi-tab Admin page
+  - `frontend/src/routes/index.tsx` — Added /admin route
+  - `frontend/src/components/layout/Navbar.tsx` — Added conditional Admin link
   - `README.md`
   - `memory.md`
 
@@ -50,7 +51,7 @@
 | **Phase 10** | AI Career Chatbot | **Completed ✅** |
 | **Phase 11** | Course & Certification Recommendations | **Completed ✅** |
 | **Phase 12** | Progress Tracking & Analytics | **Completed ✅** |
-| **Phase 13** | Admin Portal | **Not Started ⏳** |
+| **Phase 13** | Admin Portal | **Completed ✅** |
 | **Phase 14** | Notification Engine | **Not Started ⏳** |
 | **Phase 15** | Comprehensive Testing (Unit, Integration, API, E2E) | **Not Started ⏳** |
 | **Phase 16** | Production Deployment (Vercel, Render, Neon DB, Cloudinary) | **Not Started ⏳** |
@@ -116,6 +117,10 @@
    - Frontend proxies `/api` calls directly to `http://localhost:8000` during development.
 5. **Auto-Badge Awarding**:
    - Achievements are evaluated and awarded lazily on each progress overview fetch, ensuring badges appear immediately when thresholds are crossed.
+6. **Admin Role-Based Access**:
+   - `get_current_admin` dependency wraps `get_current_user` and checks `is_admin` flag.
+   - Self-protection guards prevent admin from deactivating/demoting/deleting their own account.
+   - Frontend `AdminRoute` component mirrors the backend check for seamless UX.
 
 ---
 
@@ -125,7 +130,8 @@
 
 ---
 
-## 🎯 Next Step / Pending Tasks (Phase 13 — Admin Portal)
-- Create admin-only API endpoints for platform management.
-- Build admin dashboard with user management, assessment management, course management, and reports.
-- Implement role-based access control for admin routes.
+## 🎯 Next Step / Pending Tasks (Phase 14 — Notification Engine)
+- Design notification types (daily reminders, learning reminders, goal reminders, achievement notifications).
+- Create notification model and service.
+- Build notification UI with bell icon and dropdown.
+- Implement real-time or polling-based notification delivery.
