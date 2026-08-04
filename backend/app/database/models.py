@@ -44,6 +44,7 @@ class User(Base):
     chat_messages = relationship("ChatMessage", back_populates="user", cascade="all, delete-orphan")
     course_recommendations = relationship("CourseRecommendation", back_populates="user", cascade="all, delete-orphan")
     achievements = relationship("Achievement", back_populates="user", cascade="all, delete-orphan")
+    notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -295,4 +296,23 @@ class Achievement(Base):
 
     def __repr__(self):
         return f"<Achievement badge={self.badge_key} user_id={self.user_id}>"
+
+
+class Notification(Base):
+    """System and achievement notifications for a user."""
+
+    __tablename__ = "notifications"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String, ForeignKey("users.id"), nullable=False, index=True)
+    title = Column(String, nullable=False)
+    message = Column(Text, nullable=False)
+    type = Column(String, nullable=False)  # 'achievement', 'system', 'roadmap', etc.
+    is_read = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    user = relationship("User", back_populates="notifications")
+
+    def __repr__(self):
+        return f"<Notification title={self.title} user_id={self.user_id} is_read={self.is_read}>"
 

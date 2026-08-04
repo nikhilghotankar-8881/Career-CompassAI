@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, FileText, MessageSquare, BookOpen, Map, ArrowLeft, TrendingUp, Shield } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import NotificationBell from '@/components/common/NotificationBell';
 
 export default function Navbar() {
   const location = useLocation();
@@ -99,6 +100,10 @@ export default function Navbar() {
                   Admin
                 </Link>
               )}
+              
+              <div className="flex items-center ml-4 pl-4 border-l border-gray-200">
+                <NotificationBell />
+              </div>
             </div>
           </div>
           

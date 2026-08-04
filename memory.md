@@ -6,29 +6,27 @@
 
 ## 📌 Project Overview
 - **Project Name**: Career-CompassAI (OneStop AI)
-- **Version**: 1.7.0
+- **Version**: 1.8.0
 - **Last Updated Date**: 2026-08-04
 - **Primary Goal**: AI-powered career discovery, personalized learning roadmaps, resume analysis, and educational guidance platform.
 
 ---
 
 ## 🚦 Current Status Summary
-- **Current Phase**: Phase 13 (Admin Panel) — **COMPLETED ✅**
-- **Next Phase**: Phase 14 (Notification Engine) — **READY TO START 🚀**
+- **Current Phase**: Phase 14 (Notification Engine) — **COMPLETED ✅**
+- **Next Phase**: Phase 15 (Comprehensive Testing) — **READY TO START 🚀**
 - **Current Sprint**: Sprint 6 (Admin Panel, Notifications, Testing, Deployment)
 - **Active Files / Modified in Current Phase**:
-  - `backend/app/core/dependencies.py` — Added `get_current_admin` guard
-  - `backend/app/schemas/admin.py` — **NEW** Admin schemas
-  - `backend/app/services/admin_service.py` — **NEW** Admin business logic
-  - `backend/app/api/admin.py` — **NEW** 8 admin API endpoints
-  - `backend/app/main.py` — Registered admin router
-  - `frontend/src/types/index.ts` — Added `is_admin` to User interface
-  - `frontend/src/types/admin.ts` — **NEW** Admin TypeScript types
-  - `frontend/src/services/adminService.ts` — **NEW** Admin API service
-  - `frontend/src/components/common/AdminRoute.tsx` — **NEW** Admin route guard
-  - `frontend/src/pages/Admin/index.tsx` — **NEW** Multi-tab Admin page
-  - `frontend/src/routes/index.tsx` — Added /admin route
-  - `frontend/src/components/layout/Navbar.tsx` — Added conditional Admin link
+  - `backend/app/database/models.py` — Added `Notification` model + User relationship
+  - `backend/app/schemas/notification.py` — **NEW** Notification schemas
+  - `backend/app/services/notification_service.py` — **NEW** Notification business logic
+  - `backend/app/api/notifications.py` — **NEW** Notification API routes
+  - `backend/app/main.py` — Registered notifications router
+  - `backend/app/services/progress_service.py` — Added notification trigger on achievement
+  - `frontend/src/types/notification.ts` — **NEW** Notification TypeScript types
+  - `frontend/src/services/notificationService.ts` — **NEW** Notification API service
+  - `frontend/src/components/common/NotificationBell.tsx` — **NEW** Dropdown Bell component
+  - `frontend/src/components/layout/Navbar.tsx` — Embedded NotificationBell
   - `README.md`
   - `memory.md`
 
@@ -52,7 +50,7 @@
 | **Phase 11** | Course & Certification Recommendations | **Completed ✅** |
 | **Phase 12** | Progress Tracking & Analytics | **Completed ✅** |
 | **Phase 13** | Admin Portal | **Completed ✅** |
-| **Phase 14** | Notification Engine | **Not Started ⏳** |
+| **Phase 14** | Notification Engine | **Completed ✅** |
 | **Phase 15** | Comprehensive Testing (Unit, Integration, API, E2E) | **Not Started ⏳** |
 | **Phase 16** | Production Deployment (Vercel, Render, Neon DB, Cloudinary) | **Not Started ⏳** |
 
@@ -122,6 +120,11 @@
    - Self-protection guards prevent admin from deactivating/demoting/deleting their own account.
    - Frontend `AdminRoute` component mirrors the backend check for seamless UX.
 
+7. **Notification Engine**:
+   - `NotificationBell` is placed in the `Navbar` to be accessible globally.
+   - Dropdown is powered by `framer-motion` for smooth animations.
+   - Backend automatically generates notifications for newly awarded achievements.
+
 ---
 
 ## ⚠️ Known Issues / Tech Debt
@@ -130,8 +133,7 @@
 
 ---
 
-## 🎯 Next Step / Pending Tasks (Phase 14 — Notification Engine)
-- Design notification types (daily reminders, learning reminders, goal reminders, achievement notifications).
-- Create notification model and service.
-- Build notification UI with bell icon and dropdown.
-- Implement real-time or polling-based notification delivery.
+## 🎯 Next Step / Pending Tasks (Phase 15 — Comprehensive Testing)
+- Implement backend unit tests using `pytest` and `httpx`.
+- Implement frontend testing (if applicable).
+- Perform manual end-to-end user flows (signup -> assessment -> dashboard -> chat -> progress -> admin).

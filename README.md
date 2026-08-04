@@ -97,7 +97,7 @@ Career-CompassAI/
 | 11    | Course Recommendations       | ⬜ Pending  |
 | 12    | Progress Tracking            | ✅ Complete |
 | 13    | Admin Panel                  | ✅ Complete |
-| 14    | Notifications                | ⬜ Pending  |
+| 14    | Notifications                | ✅ Complete |
 | 15    | Testing                      | ⬜ Pending  |
 | 16    | Deployment                   | ⬜ Pending  |
 

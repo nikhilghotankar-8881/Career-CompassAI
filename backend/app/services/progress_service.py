@@ -14,6 +14,7 @@ from app.schemas.progress import (
     AchievementResponse,
     ProgressOverviewResponse,
 )
+from app.services import notification_service
 
 
 # ========================
@@ -173,6 +174,15 @@ def check_and_award_achievements(db: Session, user_id: str) -> list[models.Achie
             )
             db.add(achievement)
             newly_awarded.append(achievement)
+            
+            # Create a notification for the newly awarded badge
+            notification_service.create_notification(
+                db=db,
+                user_id=user_id,
+                title="New Achievement Unlocked! 🏆",
+                message=f"You've earned the '{badge_def['name']}' badge: {badge_def['description']}",
+                type="achievement"
+            )
 
     if newly_awarded:
         db.commit()
