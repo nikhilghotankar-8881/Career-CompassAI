@@ -62,6 +62,7 @@ app.include_router(roadmap_router)
 app.include_router(resume_router)
 app.include_router(chatbot_router)
 app.include_router(dashboard_router)
+app.include_router(courses_router)
 
 # ========================
 # Root / Health Check

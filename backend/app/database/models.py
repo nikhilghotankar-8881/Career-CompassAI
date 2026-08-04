@@ -42,6 +42,7 @@ class User(Base):
     roadmaps = relationship("Roadmap", back_populates="user", cascade="all, delete-orphan")
     resume_analyses = relationship("ResumeAnalysis", back_populates="user", cascade="all, delete-orphan")
     chat_messages = relationship("ChatMessage", back_populates="user", cascade="all, delete-orphan")
+    course_recommendations = relationship("CourseRecommendation", back_populates="user", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -253,5 +254,26 @@ class ChatMessage(Base):
 
     def __repr__(self):
         return f"<ChatMessage role={self.role} length={len(self.content)}>"
+
+
+class CourseRecommendation(Base):
+    """AI suggested courses and certifications based on skill gaps."""
+
+    __tablename__ = "course_recommendations"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String, ForeignKey("users.id"), nullable=False)
+    title = Column(String, nullable=False)
+    platform = Column(String, nullable=False) # Coursera, Udemy, edX, etc.
+    difficulty = Column(String, default="Intermediate") # Beginner, Intermediate, Advanced
+    duration = Column(String, default="4 weeks")
+    url = Column(String, nullable=True) # Search URL or direct link
+    type = Column(String, default="Course") # Course or Certification
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    user = relationship("User", back_populates="course_recommendations")
+
+    def __repr__(self):
+        return f"<CourseRecommendation title={self.title} platform={self.platform}>"
 
 

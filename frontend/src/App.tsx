@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
 import { AuthProvider } from '@/context/AuthContext';
 import { router } from '@/routes';
+import CoursesPage from './pages/Courses';
 
 // ========================
 // React Query Client
@@ -42,7 +43,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <Suspense fallback={<PageLoader />}>
-          <RouterProvider router={router} />
+          <Routes>
+            <Route path="/resume" element={<ResumePage />} />
+            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/courses" element={<CoursesPage />} />
+          </Routes>
         </Suspense>
         <Toaster
           position="top-right"
