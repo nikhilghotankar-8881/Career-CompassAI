@@ -13,3 +13,4 @@ class DashboardSummaryResponse(BaseModel):
     roadmap_progress: int = 0
     milestones_completed: int = 0
     recommendation_match: int | None = None
+    resume_score: int | None = None

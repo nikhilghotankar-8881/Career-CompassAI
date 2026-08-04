@@ -53,7 +53,7 @@ export default function DashboardPage() {
       },
       { 
         label: 'Resume Score', 
-        value: '—', // Phase 9
+        value: summary.resume_score ? `${summary.resume_score}/100` : '—',
         icon: FileText, 
         color: 'var(--color-accent-500)' 
       },

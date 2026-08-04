@@ -42,6 +42,12 @@ def get_dashboard_summary(db: Session, user_id: str) -> DashboardSummaryResponse
         if rec:
             recommendation_match = rec.match_percentage
 
+    # 4. Resume Score
+    latest_resume = db.query(models.ResumeAnalysis).filter(
+        models.ResumeAnalysis.user_id == user_id
+    ).order_by(desc(models.ResumeAnalysis.created_at)).first()
+    resume_score = latest_resume.score if latest_resume else None
+
     return DashboardSummaryResponse(
         assessment_completed=assessment_completed,
         top_trait=top_trait,
@@ -49,5 +55,6 @@ def get_dashboard_summary(db: Session, user_id: str) -> DashboardSummaryResponse
         target_role=target_role,
         roadmap_progress=roadmap_progress,
         milestones_completed=milestones_completed,
-        recommendation_match=recommendation_match
+        recommendation_match=recommendation_match,
+        resume_score=resume_score
     )

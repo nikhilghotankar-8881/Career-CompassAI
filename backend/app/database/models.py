@@ -40,6 +40,7 @@ class User(Base):
     assessment_results = relationship("AssessmentResult", back_populates="user", cascade="all, delete-orphan")
     recommendations = relationship("CareerRecommendation", back_populates="user", cascade="all, delete-orphan")
     roadmaps = relationship("Roadmap", back_populates="user", cascade="all, delete-orphan")
+    resume_analyses = relationship("ResumeAnalysis", back_populates="user", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -215,5 +216,24 @@ class Milestone(Base):
 
     def __repr__(self):
         return f"<Milestone id={self.id} status={self.status}>"
+
+
+class ResumeAnalysis(Base):
+    """AI feedback and scoring for a user's uploaded resume."""
+
+    __tablename__ = "resume_analyses"
+
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id = Column(String, ForeignKey("users.id"), nullable=False)
+    score = Column(Integer, nullable=False)
+    strengths = Column(JSON, default=list)
+    weaknesses = Column(JSON, default=list)
+    suggestions = Column(JSON, default=list)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+    user = relationship("User", back_populates="resume_analyses")
+
+    def __repr__(self):
+        return f"<ResumeAnalysis id={self.id} score={self.score}>"
 
 

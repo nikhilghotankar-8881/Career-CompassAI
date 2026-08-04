@@ -6,4 +6,5 @@ export interface DashboardSummary {
   roadmap_progress: number;
   milestones_completed: number;
   recommendation_match?: number | null;
+  resume_score?: number | null;
 }
