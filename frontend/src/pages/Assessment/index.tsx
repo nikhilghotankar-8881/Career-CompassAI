@@ -24,6 +24,8 @@ import {
 } from '@/services/assessmentService';
 import type { Question, AssessmentResult } from '@/types/assessment';
 
+import Navbar from '@/components/layout/Navbar';
+
 type ViewMode = 'intro' | 'quiz' | 'results';
 
 export default function AssessmentPage() {
@@ -129,9 +131,10 @@ export default function AssessmentPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[var(--color-background-light)] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3 text-[var(--color-text-secondary)]">
-          <Loader2 className="w-8 h-8 animate-spin text-[var(--color-primary-500)]" />
+      <div className="min-h-screen bg-slate-50">
+        <Navbar />
+        <div className="flex items-center justify-center py-32 text-slate-500">
+          <Loader2 className="w-8 h-8 animate-spin text-blue-600 mr-3" />
           <p className="text-sm font-medium">Loading Assessment Engine...</p>
         </div>
       </div>
@@ -139,8 +142,9 @@ export default function AssessmentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-background-light)]">
-      <div className="max-w-[var(--max-width)] mx-auto px-6 py-8">
+    <div className="min-h-screen bg-slate-50 text-slate-900 bg-mesh-pattern">
+      <Navbar />
+      <div className="max-w-[var(--max-width)] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         {/* Header Title */}
         <motion.div
